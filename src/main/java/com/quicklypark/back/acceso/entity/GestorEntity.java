@@ -5,9 +5,11 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
-public class Gestor {
+@Table(name = "gestor")
+public class GestorEntity {
 
 	@Id
 	@GeneratedValue (strategy = GenerationType.IDENTITY)
@@ -21,7 +23,7 @@ public class Gestor {
 
 	private String apellidos;
 
-	public Gestor(Long id, String email, String clave, String nombre, String apellidos) {
+	public GestorEntity(Long id, String email, String clave, String nombre, String apellidos) {
 		super();
 		this.id = id;
 		this.email = email;
@@ -30,7 +32,7 @@ public class Gestor {
 		this.apellidos = apellidos;
 	}
 
-	public Gestor(String email, String clave, String nombre, String apellidos) {
+	public GestorEntity(String email, String clave, String nombre, String apellidos) {
 		super();
 		this.email = email;
 		this.clave = clave;
@@ -38,7 +40,7 @@ public class Gestor {
 		this.apellidos = apellidos;
 	}
 
-	public Gestor() {
+	public GestorEntity() {
 	}
 
 	public Long getId() {
