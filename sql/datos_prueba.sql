@@ -6,32 +6,32 @@ INSERT INTO parking (id, direccion, horario) VALUES
 
 -- PLAZAS
 -- Parking 1 (2 plantas, 3x3)
-INSERT INTO plaza (planta, fila, columna, id_parking, es_plaza, libre) VALUES
-(0,0,0,1,FALSE,TRUE),
-(0,0,1,1,TRUE,FALSE),
-(0,0,2,1,TRUE,TRUE),
-(0,1,0,1,TRUE,FALSE),
-(0,1,1,1,TRUE,TRUE),
-(0,1,2,1,TRUE,TRUE),
-(1,0,0,1,TRUE,TRUE),
-(1,0,1,1,TRUE,FALSE),
-(1,0,2,1,TRUE,TRUE);
+INSERT INTO plaza (planta, fila, columna, id_parking, libre) VALUES
+(0,0,0,1,TRUE),
+(0,0,1,1,FALSE),
+(0,0,2,1,TRUE),
+(0,1,0,1,FALSE),
+(0,1,1,1,TRUE),
+(0,1,2,1,TRUE),
+(1,0,0,1,TRUE),
+(1,0,1,1,FALSE),
+(1,0,2,1,TRUE);
 
 -- Parking 2 (1 planta, 2x3)
-INSERT INTO plaza (planta, fila, columna, id_parking, es_plaza, libre) VALUES
-(0,0,0,2,TRUE,TRUE),
-(0,0,1,2,TRUE,FALSE),
-(0,0,2,2,TRUE,TRUE),
-(0,1,0,2,FALSE,TRUE),
-(0,1,1,2,TRUE,TRUE),
-(0,1,2,2,TRUE,FALSE);
+INSERT INTO plaza (planta, fila, columna, id_parking, libre) VALUES
+(0,0,0,2,TRUE),
+(0,0,1,2,FALSE),
+(0,0,2,2,TRUE),
+(0,1,0,2,TRUE),
+(0,1,1,2,TRUE),
+(0,1,2,2,FALSE);
 
 -- Parking 3 (1 planta, 2x2)
-INSERT INTO plaza (planta, fila, columna, id_parking, es_plaza, libre) VALUES
-(0,0,0,3,TRUE,TRUE),
-(0,0,1,3,TRUE,FALSE),
-(0,1,0,3,TRUE,TRUE),
-(0,1,1,3,FALSE,TRUE);
+INSERT INTO plaza (planta, fila, columna, id_parking, libre) VALUES
+(0,0,0,3,TRUE),
+(0,0,1,3,FALSE),
+(0,1,0,3,TRUE),
+(0,1,1,3,TRUE);
 
 -- REGISTROS (algunas plazas ocupadas/libres)
 INSERT INTO registro (matricula, marca_tiempo_entrada, marca_tiempo_salida, id_plaza) VALUES
