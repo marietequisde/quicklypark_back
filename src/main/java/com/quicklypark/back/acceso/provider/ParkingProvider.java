@@ -36,12 +36,13 @@ public class ParkingProvider {
 		if (parkingEntity.isPresent()) {
 
 			List<PlazaEntity> plazasEntity = plazaRepository.findByIdParking(idParking);
-			PlazaDto[][] plazasDto = new PlazaDto[obtenerMaxFila(plazasEntity) + 1]
-													[obtenerMaxColumna(plazasEntity) + 1];
+			PlazaDto[][] plazasDto = new PlazaDto[obtenerMaxFila(plazasEntity) + 1][obtenerMaxColumna(plazasEntity)
+					+ 1];
 
 			for (int i = 0; i < plazasEntity.size(); i++) {
 				PlazaEntity plazaEntity = plazasEntity.get(i);
-				plazasDto[plazaEntity.getFila()][plazaEntity.getColumna()] = new PlazaDto(plazaEntity.isLibre());
+				plazasDto[plazaEntity.getFila()][plazaEntity.getColumna()] = new PlazaDto(plazaEntity.getId(),
+						plazaEntity.isLibre());
 			}
 
 			parkingDto = new ParkingDto();
