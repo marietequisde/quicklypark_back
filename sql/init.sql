@@ -15,7 +15,6 @@ CREATE TABLE plaza (
     fila INTEGER NOT NULL,
     columna INTEGER NOT NULL,
     id_parking INTEGER NOT NULL REFERENCES parking(id) ON DELETE CASCADE,
-    es_plaza BOOLEAN NOT NULL DEFAULT FALSE,
     libre BOOLEAN NOT NULL DEFAULT TRUE,
     UNIQUE (id_parking, planta, fila, columna)
 );
