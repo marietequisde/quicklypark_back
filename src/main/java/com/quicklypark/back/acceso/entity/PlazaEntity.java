@@ -21,11 +21,11 @@ public class PlazaEntity {
 	
 	private int columna;
 	
-	private Long idParking;
+	private long idParking;
 	
 	private boolean libre;
 
-	public PlazaEntity(Long id, int planta, int fila, int columna, Long idParking, boolean libre) {
+	public PlazaEntity(Long id, int planta, int fila, int columna, long idParking, boolean libre) {
 		super();
 		this.id = id;
 		this.planta = planta;
@@ -35,7 +35,7 @@ public class PlazaEntity {
 		this.libre = libre;
 	}
 
-	public PlazaEntity(int planta, int fila, int columna, Long idParking, boolean libre) {
+	public PlazaEntity(int planta, int fila, int columna, long idParking, boolean libre) {
 		super();
 		this.planta = planta;
 		this.fila = fila;
@@ -84,7 +84,7 @@ public class PlazaEntity {
 		return idParking;
 	}
 
-	public void setIdParking(Long idParking) {
+	public void setIdParking(long idParking) {
 		this.idParking = idParking;
 	}
 
