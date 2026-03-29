@@ -17,6 +17,8 @@ import com.quicklypark.back.acceso.exception.RecursoNoEncontradoException;
 import com.quicklypark.back.acceso.provider.PlazaProvider;
 import com.quicklypark.back.util.Cadenas;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(path = "/plaza")
 public class PlazaController {
@@ -27,6 +29,7 @@ public class PlazaController {
 	private PlazaProvider plazaProvider;
 
 	@PatchMapping("/ocupar/{id}")
+	@Operation(summary = "Ocupar una plaza por id")
 	public ResponseEntity<String> ocupar(@PathVariable long id, @RequestParam String matricula) {
 		try {
 			plazaProvider.ocupar(id, matricula);
@@ -39,6 +42,7 @@ public class PlazaController {
 	}
 
 	@PatchMapping("/liberar/{id}")
+	@Operation(summary = "Liberar una plaza por id")
 	public ResponseEntity<String> liberar(@PathVariable long id) {
 		try {
 			plazaProvider.liberar(id);

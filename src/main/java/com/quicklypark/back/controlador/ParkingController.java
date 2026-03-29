@@ -20,6 +20,8 @@ import com.quicklypark.back.acceso.dto.ParkingDto;
 import com.quicklypark.back.acceso.provider.ParkingProvider;
 import com.quicklypark.back.util.Cadenas;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(path = "/parking")
 public class ParkingController {
@@ -30,6 +32,7 @@ public class ParkingController {
 	private ParkingProvider parkingProvider;
 
 	@GetMapping("/{id}")
+	@Operation(summary = "Obtener parking por id")
 	public ResponseEntity<?> obtener(@PathVariable long id) {
 		ParkingDto parking = null;
 		try {
@@ -43,6 +46,7 @@ public class ParkingController {
 	}
 
 	@PostMapping(consumes = "multipart/form-data")
+	@Operation(summary = "Crear un nuevo parking")
 	public ResponseEntity<String> nuevo(@RequestParam String direccion, @RequestParam String horario,
 			@RequestPart MultipartFile fichero) {
 		try {

@@ -10,14 +10,18 @@ import org.springframework.web.bind.annotation.RestController;
 import com.quicklypark.back.acceso.entity.GestorEntity;
 import com.quicklypark.back.acceso.repository.GestorRepository;
 
+import io.swagger.v3.oas.annotations.Operation;
+
 @RestController
 @RequestMapping(path = "/gestor")
+
 public class GestorController {
 
 	@Autowired
 	private GestorRepository gestorRepository;
 
 	@PostMapping
+	@Operation(summary = "Registrar un nuevo gestor")
 	public @ResponseBody boolean nuevoGestor(@RequestParam String email, @RequestParam String clave,
 			@RequestParam String nombre, @RequestParam String apellidos) {
 		GestorEntity nuevoGestor = new GestorEntity(email, clave, nombre, apellidos);
