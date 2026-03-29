@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,6 +29,9 @@ public class PlazaController {
 
 	@Autowired
 	private PlazaProvider plazaProvider;
+
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
 
 	@PatchMapping("/ocupar/{id}")
 	@Operation(summary = "Ocupar una plaza por id")
@@ -52,6 +57,12 @@ public class PlazaController {
 		}
 
 		return ResponseEntity.ok(Cadenas.EXITO_PLAZA_LIBRE);
+	}
+
+	@GetMapping("/testWS")
+	public ResponseEntity<String> probarWS(String mensaje) {
+		simpMessagingTemplate.convertAndSend("/topic/parking", mensaje);
+		return ResponseEntity.ok(mensaje);
 	}
 
 }
