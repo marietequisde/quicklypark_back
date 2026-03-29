@@ -1,23 +1,27 @@
 package com.quicklypark.back.controlador;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.quicklypark.back.acceso.entity.GestorEntity;
 import com.quicklypark.back.acceso.repository.GestorRepository;
 
-@Controller
+import io.swagger.v3.oas.annotations.Operation;
+
+@RestController
 @RequestMapping(path = "/gestor")
+
 public class GestorController {
 
 	@Autowired
 	private GestorRepository gestorRepository;
 
 	@PostMapping
+	@Operation(summary = "Registrar un nuevo gestor")
 	public @ResponseBody boolean nuevoGestor(@RequestParam String email, @RequestParam String clave,
 			@RequestParam String nombre, @RequestParam String apellidos) {
 		GestorEntity nuevoGestor = new GestorEntity(email, clave, nombre, apellidos);

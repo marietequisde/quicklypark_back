@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.quicklypark.back.acceso.entity.PlazaEntity;
 
-public interface PlazaRepository extends CrudRepository<PlazaEntity, Integer> {
+public interface PlazaRepository extends CrudRepository<PlazaEntity, Long> {
 
 	@Query("FROM PlazaEntity p WHERE p.idParking = :idParking")
 	public List<PlazaEntity> findByIdParking(@Param("idParking") long idParking);
