@@ -31,6 +31,12 @@ public class ParkingController {
 	@Autowired
 	private ParkingProvider parkingProvider;
 
+	@GetMapping
+	@Operation(summary = "Listar todos los parkings")
+	public ResponseEntity<?> listar() {
+		return ResponseEntity.ok(parkingProvider.listar());
+	}
+
 	@GetMapping("/{id}")
 	@Operation(summary = "Obtener parking por id")
 	public ResponseEntity<?> obtener(@PathVariable long id) {
