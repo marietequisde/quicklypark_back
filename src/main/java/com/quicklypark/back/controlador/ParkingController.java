@@ -42,7 +42,7 @@ public class ParkingController {
 		return ResponseEntity.ok(parking);
 	}
 
-	@PostMapping
+	@PostMapping(consumes = "multipart/form-data")
 	public ResponseEntity<String> nuevo(@RequestParam String direccion, @RequestParam String horario,
 			@RequestPart MultipartFile fichero) {
 		try {
