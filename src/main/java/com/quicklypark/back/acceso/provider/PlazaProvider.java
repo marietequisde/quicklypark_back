@@ -3,8 +3,10 @@ package com.quicklypark.back.acceso.provider;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
+import com.quicklypark.back.acceso.dto.ParkingDto;
 import com.quicklypark.back.acceso.entity.PlazaEntity;
 import com.quicklypark.back.acceso.entity.RegistroEntity;
 import com.quicklypark.back.acceso.exception.PlazaLibreException;
@@ -26,6 +28,12 @@ public class PlazaProvider {
 	@Autowired
 	private RegistroRepository registroRepository;
 
+	@Autowired
+	private ParkingProvider parkingProvider;
+
+	@Autowired
+	private SimpMessagingTemplate simpMessagingTemplate;
+
 	public void ocupar(long idPlaza, String matricula) throws RecursoNoEncontradoException, PlazaOcupadaException {
 		PlazaEntity plazaEntity = obtenerPlaza(idPlaza);
 
@@ -38,6 +46,8 @@ public class PlazaProvider {
 
 		RegistroEntity registroEntity = new RegistroEntity(matricula, idPlaza);
 		registroRepository.save(registroEntity);
+
+		enviarNuevoParking(plazaEntity.getIdParking());
 	}
 
 	public void liberar(long idPlaza) throws RecursoNoEncontradoException, PlazaLibreException {
@@ -52,14 +62,21 @@ public class PlazaProvider {
 
 		RegistroEntity registroEntity = registroRepository.findLatestByIdPlaza(idPlaza)
 				.orElse(new RegistroEntity("Error de registro", idPlaza));
-		
+
 		registroEntity.setMarcaTiempoSalida(TiempoUtil.ahora());
 		registroRepository.save(registroEntity);
+
+		enviarNuevoParking(plazaEntity.getIdParking());
 	}
 
 	private PlazaEntity obtenerPlaza(long idPlaza) throws RecursoNoEncontradoException {
 		return plazaRepository.findById(idPlaza)
 				.orElseThrow(() -> new RecursoNoEncontradoException(Cadenas.PLAZA_NO_ENCONTRADA));
+	}
+
+	private void enviarNuevoParking(long idParking) {
+		ParkingDto parking = parkingProvider.obtener(idParking);
+		simpMessagingTemplate.convertAndSend("/topic/parking/" + idParking, parking);
 	}
 
 }

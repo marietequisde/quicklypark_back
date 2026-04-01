@@ -33,6 +33,7 @@ public class PlazaController {
 	public ResponseEntity<String> ocupar(@PathVariable long id, @RequestParam String matricula) {
 		try {
 			plazaProvider.ocupar(id, matricula);
+
 		} catch (RecursoNoEncontradoException | PlazaOcupadaException e) {
 			logger.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
@@ -46,6 +47,7 @@ public class PlazaController {
 	public ResponseEntity<String> liberar(@PathVariable long id) {
 		try {
 			plazaProvider.liberar(id);
+
 		} catch (RecursoNoEncontradoException | PlazaLibreException e) {
 			logger.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
