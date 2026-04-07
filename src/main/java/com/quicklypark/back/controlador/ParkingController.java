@@ -64,4 +64,19 @@ public class ParkingController {
 		}
 		return ResponseEntity.ok(Cadenas.EXITO_NUEVO_PARKING);
 	}
+
+	@PostMapping(path = "/preview", consumes = "multipart/form-data")
+	@Operation(summary = "Previsualizar un nuevo parking")
+	public ResponseEntity<?> previsualizar(@RequestParam String direccion, @RequestParam String horario,
+			@RequestPart MultipartFile fichero) {
+		ParkingDto parking = null;
+		try {
+			parking = parkingProvider.previsualizar(direccion, horario, fichero);
+		} catch (IOException e) {
+			logger.error(Cadenas.ERROR_LEER_PARKING);
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Cadenas.ERROR_LEER_PARKING);
+		}
+		return ResponseEntity.ok(parking);
+	}
 }

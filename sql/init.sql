@@ -1,5 +1,6 @@
 DROP TABLE IF EXISTS gestor;
 DROP TABLE IF EXISTS registro;
+DROP TABLE IF EXISTS tipo_vehiculo;
 DROP TABLE IF EXISTS plaza;
 DROP TABLE IF EXISTS parking;
 
@@ -19,12 +20,19 @@ CREATE TABLE plaza (
     UNIQUE (id_parking, planta, fila, columna)
 );
 
+CREATE TABLE tipo_vehiculo (
+	id SERIAL PRIMARY KEY,
+	tipo VARCHAR(40) UNIQUE NOT NULL
+);
+
 CREATE TABLE registro (
     id SERIAL PRIMARY KEY,
     matricula VARCHAR(20) NOT NULL,
+    id_tipo_vehiculo BIGINT UNSIGNED,
     marca_tiempo_entrada TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     marca_tiempo_salida TIMESTAMP,
-    id_plaza INTEGER NOT NULL REFERENCES plaza(id) ON DELETE CASCADE
+    id_plaza INTEGER NOT NULL REFERENCES plaza(id) ON DELETE CASCADE,
+    FOREIGN KEY (id_tipo_vehiculo) REFERENCES tipo_vehiculo(id) ON DELETE CASCADE
 );
 
 CREATE TABLE gestor (

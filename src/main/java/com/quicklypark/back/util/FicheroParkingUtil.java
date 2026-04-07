@@ -30,6 +30,10 @@ public class FicheroParkingUtil {
 
 		return plazas;
 	}
+	
+	public static List<PlazaEntity> leerPlazas(MultipartFile fichero) throws IOException {
+		return leerPlazas(fichero, -1);
+	}
 
 	private static List<PlazaEntity> leerFila(String linea, int numFila, long idParking) {
 		List<PlazaEntity> plazas = new ArrayList<PlazaEntity>();

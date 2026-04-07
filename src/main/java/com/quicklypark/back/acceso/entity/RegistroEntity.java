@@ -20,6 +20,8 @@ public class RegistroEntity {
 
 	private String matricula;
 
+	private Long idTipoVehiculo;
+
 	@Column(insertable = false)
 	private Timestamp marcaTiempoEntrada;
 
@@ -27,28 +29,31 @@ public class RegistroEntity {
 
 	private long idPlaza;
 
-	public RegistroEntity(Long id, String matricula, Timestamp marcaTiempoEntrada, Timestamp marcaTiempoSalida,
-			long idPlaza) {
+	public RegistroEntity(Long id, String matricula, Long idTipoVehiculo, Timestamp marcaTiempoEntrada,
+			Timestamp marcaTiempoSalida, long idPlaza) {
 		super();
 		this.id = id;
 		this.matricula = matricula;
+		this.idTipoVehiculo = idTipoVehiculo;
 		this.marcaTiempoEntrada = marcaTiempoEntrada;
 		this.marcaTiempoSalida = marcaTiempoSalida;
 		this.idPlaza = idPlaza;
 	}
 
-	public RegistroEntity(String matricula, Timestamp marcaTiempoEntrada, Timestamp marcaTiempoSalida, long idPlaza) {
+	public RegistroEntity(String matricula, Long idTipoVehiculo, Timestamp marcaTiempoEntrada,
+			Timestamp marcaTiempoSalida, long idPlaza) {
 		super();
 		this.matricula = matricula;
+		this.idTipoVehiculo = idTipoVehiculo;
 		this.marcaTiempoEntrada = marcaTiempoEntrada;
 		this.marcaTiempoSalida = marcaTiempoSalida;
 		this.idPlaza = idPlaza;
 	}
-	
 
-	public RegistroEntity(String matricula, long idPlaza) {
+	public RegistroEntity(String matricula, Long idTipoVehiculo, long idPlaza) {
 		super();
 		this.matricula = matricula;
+		this.idTipoVehiculo = idTipoVehiculo;
 		this.idPlaza = idPlaza;
 	}
 
@@ -94,6 +99,14 @@ public class RegistroEntity {
 
 	public void setIdPlaza(long idPlaza) {
 		this.idPlaza = idPlaza;
+	}
+
+	public Long getIdTipoVehiculo() {
+		return idTipoVehiculo;
+	}
+
+	public void setIdTipoVehiculo(Long idTipoVehiculo) {
+		this.idTipoVehiculo = idTipoVehiculo;
 	}
 
 }
