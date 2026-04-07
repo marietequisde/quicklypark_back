@@ -34,12 +34,12 @@ public class ParkingProvider {
 
 	public List<ParkingListadoDto> listar() {
 		List<ParkingListadoDto> parkingsDto = new ArrayList<ParkingListadoDto>();
-		
+
 		Iterable<ParkingEntity> parkingsEntity = parkingRepository.findAll();
 		for (Iterator<ParkingEntity> it = parkingsEntity.iterator(); it.hasNext();) {
 			parkingsDto.add(obtenerParkingListadoDto(it.next()));
 		}
-		
+
 		return parkingsDto;
 	}
 
@@ -48,21 +48,9 @@ public class ParkingProvider {
 		Optional<ParkingEntity> parkingEntity = parkingRepository.findById(idParking);
 
 		if (parkingEntity.isPresent()) {
-
 			List<PlazaEntity> plazasEntity = plazaRepository.findByIdParking(idParking);
-			PlazaDto[][] plazasDto = new PlazaDto[obtenerMaxFila(plazasEntity) + 1][obtenerMaxColumna(plazasEntity)
-					+ 1];
-
-			for (int i = 0; i < plazasEntity.size(); i++) {
-				PlazaEntity plazaEntity = plazasEntity.get(i);
-				plazasDto[plazaEntity.getFila()][plazaEntity.getColumna()] = new PlazaDto(plazaEntity.getId(),
-						plazaEntity.isLibre());
-			}
-
-			parkingDto = new ParkingDto();
-			parkingDto.setDireccion(parkingEntity.get().getDireccion());
-			parkingDto.setHorario(parkingEntity.get().getHorario());
-			parkingDto.setPlazas(plazasDto);
+			parkingDto = obtenerParkingDto(parkingEntity.get().getDireccion(), parkingEntity.get().getHorario(),
+					plazasEntity);
 		}
 
 		return parkingDto;
@@ -78,6 +66,29 @@ public class ParkingProvider {
 		}
 
 		return idParking;
+	}
+
+	public ParkingDto previsualizar(String direccion, String horario, MultipartFile fichero) throws IOException {
+		List<PlazaEntity> plazas = FicheroParkingUtil.leerPlazas(fichero);
+		return obtenerParkingDto(direccion, horario, plazas);
+	}
+
+	private static ParkingDto obtenerParkingDto(String direccion, String horario, List<PlazaEntity> plazasEntity) {
+		ParkingDto parkingDto = null;
+		PlazaDto[][] plazasDto = new PlazaDto[obtenerMaxFila(plazasEntity) + 1][obtenerMaxColumna(plazasEntity) + 1];
+
+		for (int i = 0; i < plazasEntity.size(); i++) {
+			PlazaEntity plazaEntity = plazasEntity.get(i);
+			plazasDto[plazaEntity.getFila()][plazaEntity.getColumna()] = new PlazaDto(plazaEntity.getId(),
+					plazaEntity.isLibre());
+		}
+
+		parkingDto = new ParkingDto();
+		parkingDto.setDireccion(direccion);
+		parkingDto.setHorario(horario);
+		parkingDto.setPlazas(plazasDto);
+
+		return parkingDto;
 	}
 
 	private static int obtenerMaxFila(List<PlazaEntity> plazas) {

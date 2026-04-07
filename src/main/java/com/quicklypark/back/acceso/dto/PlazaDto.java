@@ -4,19 +4,19 @@ public class PlazaDto {
 
 	private boolean libre;
 
-	private long id;
+	private Long id;
 
-	public PlazaDto(long id, boolean libre) {
+	public PlazaDto(Long id, boolean libre) {
 		super();
 		this.id = id;
 		this.libre = libre;
 	}
 
-	public long getIdPlaza() {
+	public Long getIdPlaza() {
 		return id;
 	}
 
-	public void setIdPlaza(long id) {
+	public void setIdPlaza(Long id) {
 		this.id = id;
 	}
 
