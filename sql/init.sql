@@ -42,3 +42,14 @@ CREATE TABLE gestor (
     nombre VARCHAR(20) NOT NULL,
     apellidos VARCHAR(40) NOT NULL
 );
+
+CREATE OR REPLACE VIEW vista_registro AS
+SELECT
+r.id,
+tipo AS tipo_vehiculo,
+marca_tiempo_entrada,
+marca_tiempo_salida,
+id_parking
+FROM registro r
+JOIN tipo_vehiculo t ON r.id_tipo_vehiculo = t.id
+JOIN plaza p ON r.id_plaza = p.id; 
