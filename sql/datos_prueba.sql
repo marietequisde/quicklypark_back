@@ -33,13 +33,19 @@ INSERT INTO plaza (planta, fila, columna, id_parking, libre) VALUES
 (0,1,0,3,TRUE),
 (0,1,1,3,TRUE);
 
+-- TIPOS DE VEHICULOS
+INSERT INTO tipo_vehiculo(tipo) VALUES
+('Turismo'),
+('Furgoneta'),
+('Motocicleta');
+
 -- REGISTROS (algunas plazas ocupadas/libres)
-INSERT INTO registro (matricula, marca_tiempo_entrada, marca_tiempo_salida, id_plaza) VALUES
-('1234ABC', '2026-03-18 08:00:00', NULL, 2),
-('5678DEF', '2026-03-18 07:30:00', '2026-03-18 10:00:00', 4),
-('9012GHI', '2026-03-17 22:00:00', NULL, 8),
-('3456JKL', '2026-03-18 09:15:00', NULL, 11),
-('7890MNO', '2026-03-18 06:00:00', '2026-03-18 08:00:00', 6);
+INSERT INTO registro (matricula, id_tipo_vehiculo, marca_tiempo_entrada, marca_tiempo_salida, id_plaza) VALUES
+('1234ABC', 1, '2026-03-18 08:00:00', NULL, 2),
+('5678DEF', 2, '2026-03-18 07:30:00', '2026-03-18 10:00:00', 4),
+('9012GHI', 3, '2026-03-17 22:00:00', NULL, 8),
+('3456JKL', 1, '2026-03-18 09:15:00', NULL, 11),
+('7890MNO', 2, '2026-03-18 06:00:00', '2026-03-18 08:00:00', 6);
 
 -- GESTORES
 INSERT INTO gestor (email, clave, nombre, apellidos) VALUES

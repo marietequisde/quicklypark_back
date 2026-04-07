@@ -30,9 +30,10 @@ public class PlazaController {
 
 	@PatchMapping("/ocupar/{id}")
 	@Operation(summary = "Ocupar una plaza por id")
-	public ResponseEntity<String> ocupar(@PathVariable long id, @RequestParam String matricula) {
+	public ResponseEntity<String> ocupar(@PathVariable long id, @RequestParam String matricula,
+			@RequestParam Long idTipoVehiculo) {
 		try {
-			plazaProvider.ocupar(id, matricula);
+			plazaProvider.ocupar(id, matricula, idTipoVehiculo);
 
 		} catch (RecursoNoEncontradoException | PlazaOcupadaException e) {
 			logger.error(e.getMessage());
