@@ -17,5 +17,6 @@ public class Cadenas {
 	public static final String TIPO_VEHICULO_NO_ENCONTRADO = "No se ha podido encontrar el tipo de vehículo.";
 	
 	public static final String ERROR_AUTENTICACION = "Error de autenticación, revisa las credenciales.";
+	public static final String EXITO_AUTENTICACION = "Credenciales correctas.";
 
 }
