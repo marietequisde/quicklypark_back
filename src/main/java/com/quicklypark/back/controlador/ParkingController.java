@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.quicklypark.back.acceso.dto.ParkingDto;
+import com.quicklypark.back.acceso.exception.AutenticacionException;
 import com.quicklypark.back.acceso.provider.ParkingProvider;
 import com.quicklypark.back.util.Cadenas;
+import com.quicklypark.back.util.SeguridadUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -27,6 +29,9 @@ import io.swagger.v3.oas.annotations.Operation;
 public class ParkingController {
 
 	Logger logger = LoggerFactory.getLogger(ParkingController.class);
+
+	@Autowired
+	private SeguridadUtil seguridadUtil;
 
 	@Autowired
 	private ParkingProvider parkingProvider;
@@ -53,10 +58,14 @@ public class ParkingController {
 
 	@PostMapping(consumes = "multipart/form-data")
 	@Operation(summary = "Crear un nuevo parking")
-	public ResponseEntity<String> nuevo(@RequestParam String direccion, @RequestParam String horario,
-			@RequestPart MultipartFile fichero) {
+	public ResponseEntity<String> nuevo(@RequestParam String email, @RequestParam String clave,
+			@RequestParam String direccion, @RequestParam String horario, @RequestPart MultipartFile fichero) {
 		try {
+			seguridadUtil.validarCredenciales(email, clave);
 			parkingProvider.crear(direccion, horario, fichero);
+		} catch (AutenticacionException e) {
+			logger.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		} catch (IOException e) {
 			logger.error(Cadenas.ERROR_LEER_PARKING);
 			e.printStackTrace();
@@ -67,11 +76,15 @@ public class ParkingController {
 
 	@PostMapping(path = "/preview", consumes = "multipart/form-data")
 	@Operation(summary = "Previsualizar un nuevo parking")
-	public ResponseEntity<?> previsualizar(@RequestParam String direccion, @RequestParam String horario,
-			@RequestPart MultipartFile fichero) {
+	public ResponseEntity<?> previsualizar(@RequestParam String email, @RequestParam String clave,
+			@RequestParam String direccion, @RequestParam String horario, @RequestPart MultipartFile fichero) {
 		ParkingDto parking = null;
 		try {
+			seguridadUtil.validarCredenciales(email, clave);
 			parking = parkingProvider.previsualizar(direccion, horario, fichero);
+		} catch (AutenticacionException e) {
+			logger.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
 		} catch (IOException e) {
 			logger.error(Cadenas.ERROR_LEER_PARKING);
 			e.printStackTrace();

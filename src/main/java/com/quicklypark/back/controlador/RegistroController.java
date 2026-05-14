@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.quicklypark.back.acceso.entity.RegistroVistaEntity;
 import com.quicklypark.back.acceso.exception.AutenticacionException;
-import com.quicklypark.back.acceso.repository.GestorRepository;
 import com.quicklypark.back.acceso.repository.RegistroVistaRepository;
+import com.quicklypark.back.util.SeguridadUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
 
@@ -28,18 +28,18 @@ public class RegistroController {
 	Logger logger = LoggerFactory.getLogger(RegistroController.class);
 
 	@Autowired
-	private RegistroVistaRepository registroVistaRepository;
+	private SeguridadUtil seguridadUtil;
 
 	@Autowired
-	private GestorRepository gestorRepository;
+	private RegistroVistaRepository registroVistaRepository;
 
 	@GetMapping("/{id}")
 	@Operation(summary = "Obtener los datos de uso de un parking")
-	public ResponseEntity<?> obtenerPorIdParking(@PathVariable long id, @RequestParam Timestamp desde,
-			@RequestParam Timestamp hasta, @RequestParam String email, @RequestParam String clave) {
+	public ResponseEntity<?> obtenerPorIdParking(@RequestParam String email, @RequestParam String clave,
+			@PathVariable long id, @RequestParam Timestamp desde, @RequestParam Timestamp hasta) {
 		List<RegistroVistaEntity> registros = null;
 		try {
-			gestorRepository.obtenerPorEmailYClave(email, clave).orElseThrow(() -> new AutenticacionException());
+			seguridadUtil.validarCredenciales(email, clave);
 			registros = registroVistaRepository.obtenerPorIdParkingYFechas(id, desde, hasta);
 		} catch (AutenticacionException e) {
 			logger.error(e.getMessage());
