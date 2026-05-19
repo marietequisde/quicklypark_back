@@ -1,6 +1,5 @@
 package com.quicklypark.back.controlador;
 
-import java.sql.Timestamp;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.quicklypark.back.acceso.entity.RegistroVistaEntity;
+import com.quicklypark.back.acceso.entity.RegistroSemanalVistaEntity;
 import com.quicklypark.back.acceso.exception.AutenticacionException;
-import com.quicklypark.back.acceso.repository.RegistroVistaRepository;
+import com.quicklypark.back.acceso.repository.RegistroSemanalVistaRepository;
 import com.quicklypark.back.util.SeguridadUtil;
 
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,16 +30,16 @@ public class RegistroController {
 	private SeguridadUtil seguridadUtil;
 
 	@Autowired
-	private RegistroVistaRepository registroVistaRepository;
+	private RegistroSemanalVistaRepository registroSemanalVistaRepository;
 
-	@GetMapping("/{id}")
-	@Operation(summary = "Obtener los datos de uso de un parking")
+	@GetMapping("/{idParking}")
+	@Operation(summary = "Obtener los datos de uso de un parking en la semana actual")
 	public ResponseEntity<?> obtenerPorIdParking(@RequestParam String email, @RequestParam String clave,
-			@PathVariable long id, @RequestParam Timestamp desde, @RequestParam Timestamp hasta) {
-		List<RegistroVistaEntity> registros = null;
+			@PathVariable long idParking) {
+		List<RegistroSemanalVistaEntity> registros = null;
 		try {
 			seguridadUtil.validarCredenciales(email, clave);
-			registros = registroVistaRepository.obtenerPorIdParkingYFechas(id, desde, hasta);
+			registros = registroSemanalVistaRepository.obtenerPorIdParking(idParking);
 		} catch (AutenticacionException e) {
 			logger.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());

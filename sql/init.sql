@@ -53,3 +53,16 @@ id_parking
 FROM registro r
 JOIN tipo_vehiculo t ON r.id_tipo_vehiculo = t.id
 JOIN plaza p ON r.id_plaza = p.id; 
+
+CREATE OR REPLACE VIEW VISTA_REGISTRO_SEMANAL AS
+SELECT id_parking,
+SUM(case WEEKDAY(marca_tiempo_entrada) when 0 then 1 else 0 end) AS "lunes",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 1 then 1 else 0 end) AS "martes",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 2 then 1 else 0 end) AS "miercoles",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 3 then 1 else 0 end) AS "jueves",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 4 then 1 else 0 end) AS "viernes",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 5 then 1 else 0 end) AS "sabado",
+SUM(case WEEKDAY(marca_tiempo_entrada) when 6 then 1 else 0 end) AS "domingo"
+FROM vista_registro
+WHERE WEEK(CURDATE(), 1) = WEEK(marca_tiempo_entrada, 1)
+GROUP BY id_parking;
