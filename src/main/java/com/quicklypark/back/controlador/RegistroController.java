@@ -37,7 +37,7 @@ public class RegistroController {
 	@Autowired
 	private RegistroVehiculosVistaRepository registroVehiculosVistaRepository;
 
-	@GetMapping("/{idParking}")
+	@GetMapping("/semanal/{idParking}")
 	@Operation(summary = "Obtener los datos de uso de un parking en la semana actual")
 	public ResponseEntity<?> obtenerPorIdParking(@RequestParam String email, @RequestParam String clave,
 			@PathVariable long idParking) {
